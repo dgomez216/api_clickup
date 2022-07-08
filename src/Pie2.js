@@ -20,11 +20,11 @@ export default function Pies(){
         method: 'get',
         url: 'http://localhost:3001/api/',
       })
-      console.log("La cantidad de cosas son: ", Object.keys(result.data.assigned).length )
+      console.log("La cantidad de cosas son: ", Object.keys(result.data.tagName).length )
       setData({
-            labels: Object.keys(result.data.assigned),
+            labels: Object.keys(result.data.tagName),
             datasets: [{
-                data: Object.values(result.data.assigned),
+                data: Object.values(result.data.tagName),
                 pointBackgroundColor: "rgb(75, 192, 192)",
                 backgroundColor: [
                   'rgb(108, 165, 89)',
@@ -46,7 +46,7 @@ export default function Pies(){
   return(
     Object.keys(data).length > 0 ? 
     <div>
-      <p>Assigned to persons</p>
+      <p>Status of tasks</p>
       <Pie data={data}></Pie>
     </div>
     : <div>Loading...</div>

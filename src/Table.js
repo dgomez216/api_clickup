@@ -1,14 +1,13 @@
 import React from 'react';
 import { useEffect, useState} from 'react';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import axios from 'axios';
-import { Pie } from 'react-chartjs-2';
+import { Bar } from 'react-chartjs-2';
 // import Parametros from './Back'
 
-ChartJS.register(ArcElement, Tooltip, Legend);
+import { Chart, registerables } from 'chart.js';
+Chart.register(...registerables);
 
-
-export default function Pies(){
+export default function Table(){
 
   const [data, setData] = useState({});
 
@@ -20,34 +19,35 @@ export default function Pies(){
         method: 'get',
         url: 'http://localhost:3001/api/',
       })
-      console.log("La cantidad de cosas son: ", Object.keys(result.data.assigned).length )
+      console.log("La cantidad de cosas son: ", Object.keys(result.data.Names).length )
       setData({
-            labels: Object.keys(result.data.assigned),
+            type: 'bar',
+            labels: Object.keys(result.data.Names),
             datasets: [{
-                data: Object.values(result.data.assigned),
+                label: "Grafica de nombres",
+                data: Object.values(result.data.Names),
                 pointBackgroundColor: "rgb(75, 192, 192)",
                 backgroundColor: [
                   'rgb(108, 165, 89)',
                   'rgb(165, 100, 89)',
                   'rgb(127, 109, 106)',
                 ],
-            }]
+           
+            },
+        ]
         })
       
       
     }
     fetchData();
   }, []);
-  //// VALORES QUE VAN A IR EN DATA DE PIE
-  //Object.values(result.data.Names) values
-  //Object.keys(result.data.Names) labels
 
 
   return(
     Object.keys(data).length > 0 ? 
     <div>
-      <p>Assigned to persons</p>
-      <Pie data={data}></Pie>
+      <p>Number of elements in Bpo2p</p>
+      <Bar data={data}></Bar>
     </div>
     : <div>Loading...</div>
   ) 
